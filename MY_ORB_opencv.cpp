@@ -609,40 +609,38 @@ void MY_ORB::detectAndCompute(Mat image, vector<KeyPoint>& keypoints, Mat& descr
 int main() {
     Mat image = imread("d:\\1.jpg", IMREAD_COLOR);
     if (image.empty())return -1;
-    cout << image.size() << endl;
-    //resize(image, image, Size(4578, 3052), INTER_LANCZOS4);
-    //MY_ORB orb(
-    //    1.2,        //scaleFactor : 缩小因子，图像每层较上一层缩小的比例
-    //    8,          //nlevels : 金字塔总层数
-    //    0,          //firstLevel : 原图放在金字塔第几层。如果不放在第0层，则[0,firstLevel)层的图像由原图生采样得到
-    //    31,         //border : 距离边界太近的粗角点将被删除
-    //    31,         //patchSize : 特征点角度计算圆形区域的直径(包括特征点本身)
-    //    20,         //fastThreshold : fast角点检测阈值
-    //    false,      //specifyNumberEachLevel : 是否指定金字塔每层图像应检测出的特征点数目。如果为false，则接收总特征点数，按照默认方式为各层分配特征点容量。
-    //    true,       //useFastScore : 是否使用Fast score进行粗特征点筛选。
-    //    false,      //useHarrisScore : 是否使用Harris score进行粗特征点筛选。
-    //                //如果useFastScore和useHarrisScore同时为false或者同时为true，则同时采用两种分数
-    //    7,          //harrisBlockSize : harris分数ROI区域的长度。
-    //    0.04f,       //harris_k : 计算harris score的k值，paper建议一般为0.04-0.06。
-    //    7,           //计算描述子前，高斯模糊kernel size
-    //    2.0         //计算描述子前，高斯模糊kernel sigma
-    //);
 
-    //vector<KeyPoint>keypoints;
-    //Mat descriptors;
-    //orb.detectAndCompute(image, keypoints, descriptors);
-    //for (int i = 0; i < keypoints.size(); i++) {
-    //    cout << keypoints[i].pt << " " << keypoints[i].response << " " << keypoints[i].octave << endl;
-    //}
-    //cout << descriptors;
+    MY_ORB orb(
+        1.2,        //scaleFactor : 缩小因子，图像每层较上一层缩小的比例
+        8,          //nlevels : 金字塔总层数
+        0,          //firstLevel : 原图放在金字塔第几层。如果不放在第0层，则[0,firstLevel)层的图像由原图生采样得到
+        31,         //border : 距离边界太近的粗角点将被删除
+        31,         //patchSize : 特征点角度计算圆形区域的直径(包括特征点本身)
+        20,         //fastThreshold : fast角点检测阈值
+        false,      //specifyNumberEachLevel : 是否指定金字塔每层图像应检测出的特征点数目。如果为false，则接收总特征点数，按照默认方式为各层分配特征点容量。
+        true,       //useFastScore : 是否使用Fast score进行粗特征点筛选。
+        true,      //useHarrisScore : 是否使用Harris score进行粗特征点筛选。
+                    //如果useFastScore和useHarrisScore同时为false或者同时为true，则同时采用两种分数
+        7,          //harrisBlockSize : harris分数ROI区域的长度。
+        0.04f,       //harris_k : 计算harris score的k值，paper建议一般为0.04-0.06。
+        7,           //计算描述子前，高斯模糊kernel size
+        2.0         //计算描述子前，高斯模糊kernel sigma
+    );
 
-     Ptr<ORB> orb = ORB::create(100, 1.2, 8, 31, 0, 2, ORB::FAST_SCORE, 31, 20);
+    vector<KeyPoint>keypoints;
+    Mat descriptors;
+    orb.detectAndCompute(image, keypoints, descriptors);
+    for (int i = 0; i < keypoints.size(); i++) {
+        cout << keypoints[i].pt << " " << keypoints[i].response << " " << keypoints[i].octave << endl;
+    }
+
+     /*Ptr<ORB> orb = ORB::create(100, 1.2, 8, 31, 2, 2, ORB::HARRIS_SCORE, 31, 20);
      vector<KeyPoint>keypoints;
      Mat descriptors;
      orb->detectAndCompute(image, Mat(), keypoints, descriptors);
      for (int i = 0; i < keypoints.size(); i++) {
          cout << keypoints[i].pt << " " << keypoints[i].response << " "<<keypoints[i].octave<<endl;
-     }
-     cout << descriptors;
+     }*/
+     
      
 }
